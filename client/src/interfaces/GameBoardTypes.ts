@@ -9,5 +9,8 @@ export interface CellData {
 
 export interface BoardCellProps {
   cell: CellData;
+  rowIndex: number;
+  colIndex: number;
+  onClick: (row: number, col: number) => void;
 }
 

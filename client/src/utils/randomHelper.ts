@@ -3,7 +3,7 @@
 import type { Shape, BackgroundColor, CellData } from "../interfaces/GameBoardTypes";
 import { SHAPES, BACKGROUND_COLORS, BOARD_ROWS, BOARD_COLS } from "../config/constants"; 
 
-function shuffleArray<T>(array: T[]) {
+export const shuffleArray = <T>(array: T[]) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -19,7 +19,9 @@ export function isSafe(
 ): boolean {
     const neighbors = [
         { r: row - 1, c: col }, 
-        { r: row, c: col - 1 }, 
+        { r: row, c: col - 1 },
+        { r: row + 1, c: col },
+        { r: row, c: col + 1 }, 
     ];
 
     for (const neighbor of neighbors) {
@@ -79,3 +81,32 @@ export function solveBoard(board: (CellData | null)[][], row: number, col: numbe
 
     return false;
 }
+
+export const getNextValidCellData = (
+    board: CellData[][], 
+    row: number, 
+    col: number
+): CellData | null => {
+    
+    const currentCell = board[row][col];
+    
+    const availableShapes = [...SHAPES];
+    const availableColors = [...BACKGROUND_COLORS];
+    shuffleArray(availableShapes);
+    shuffleArray(availableColors);
+
+    for (const shape of availableShapes) {
+        for (const color of availableColors) {
+            
+            const isDifferent = (shape !== currentCell.shape) || (color !== currentCell.backgroundColor);
+            
+            if (isDifferent) {
+
+                if (isSafe(board, row, col, shape as Shape, color as BackgroundColor)) {
+                    return { shape: shape as Shape, backgroundColor: color as BackgroundColor };
+                }
+            }
+        }
+    }
+    return null;
+}   
