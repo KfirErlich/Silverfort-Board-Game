@@ -1,9 +1,11 @@
+import { GameBoard } from "./components/GameBoard";
 
 function App() {
-
   return (
-    <h1 className="text-3xl font-bold underline text-center">Hello World</h1>
-  )
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <GameBoard />
+    </div>
+  );
 }
 
-export default App
+export default App;
