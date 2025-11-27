@@ -1,7 +1,4 @@
-interface GameOverProps {
-  score: number;
-  onRestart: () => void;
-}
+import type { GameOverProps } from "../interfaces/GameBoardTypes";
 
 export function GameOver({ score, onRestart }: GameOverProps) {
   return (

@@ -16,3 +16,8 @@ export interface BoardCellProps {
   cooldownTurns: number
 }
 
+export interface GameOverProps {
+    score: number;
+    onRestart: () => void;
+  }
+

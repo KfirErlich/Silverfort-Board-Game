@@ -32,11 +32,16 @@ export function GameBoard() {
     setScore(prev => prev + 1);
   }, []);
 
+  const isCellOnCooldown = useCallback(
+    (key: string) => (cooldowns[key] ?? 0) > 0,
+    [cooldowns]
+  );
+
   const handleCellClick = useCallback((rowIndex: number, colIndex: number) => {
     const key = `${rowIndex}-${colIndex}`;
 
-    if (cooldowns[key] && cooldowns[key] > 0) {
-        return; 
+    if (isCellOnCooldown(key)) {
+      return;
     }
 
     const newCells = cells.map(rowArr => [...rowArr]) as CellData[][];
@@ -50,7 +55,7 @@ export function GameBoard() {
       setIsGameOver(true);
     }
 
-  }, [cells, cooldowns, applyMoveEffects]);
+  }, [applyMoveEffects, cells, isCellOnCooldown]);
 
 
   const initializeBoard = useCallback((): CellData[][] => {
@@ -59,13 +64,13 @@ export function GameBoard() {
     );
     if (solveBoard(initialCells, 0, 0)) {
       return initialCells as CellData[][];
-    } else {
-      console.error("Failed to generate a valid board.");
-      return []; 
     }
+
+    console.error("Failed to generate a valid board.");
+    return [];
   }, []);
 
-  useEffect(() => {
+  const resetGameState = useCallback(() => {
     const board = initializeBoard();
     setCells(board);
     setIsGameOver(false);
@@ -73,13 +78,13 @@ export function GameBoard() {
     setScore(0);
   }, [initializeBoard]);
 
+  useEffect(() => {
+    resetGameState();
+  }, [resetGameState]);
+
   const handleRestart = useCallback(() => {
-    const board = initializeBoard();
-    setCells(board);
-    setIsGameOver(false);
-    setCooldowns({});
-    setScore(0);
-  }, [initializeBoard]);
+    resetGameState();
+  }, [resetGameState]);
 
 
   if (cells.length === 0 && !isGameOver) {
