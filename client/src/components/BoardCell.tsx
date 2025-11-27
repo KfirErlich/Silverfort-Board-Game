@@ -1,7 +1,7 @@
 import type { BoardCellProps } from "../interfaces/GameBoardTypes";
 import { COLOR_CLASSES } from "../config/constants";
 
-export function BoardCell({ cell }: BoardCellProps) {
+export function BoardCell({ cell, rowIndex, colIndex, onClick }: BoardCellProps) {
   const getShapeIcon = () => {
     const size = "60%";
     switch (cell.shape) {
@@ -35,10 +35,12 @@ export function BoardCell({ cell }: BoardCellProps) {
   };
 
   return (
-    <div
-      className={`board-cell ${COLOR_CLASSES[cell.backgroundColor]} border-2 border-gray-800 flex items-center justify-center`}
+    <button
+      type="button"
+      onClick={() => onClick(rowIndex, colIndex)}
+      className={`board-cell ${COLOR_CLASSES[cell.backgroundColor]} border-2 border-gray-800 flex items-center justify-center focus:outline-none`}
     >
       {getShapeIcon()}
-    </div>
+    </button>
   );
 }
