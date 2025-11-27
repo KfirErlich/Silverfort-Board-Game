@@ -12,5 +12,7 @@ export interface BoardCellProps {
   rowIndex: number;
   colIndex: number;
   onClick: (row: number, col: number) => void;
+  isCooldown: boolean;
+  cooldownTurns: number
 }
 
