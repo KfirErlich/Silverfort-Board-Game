@@ -1,6 +1,6 @@
 # Shape and Color Matching Board Game
 
-A tiny puzzle built around a single rule: every cell on the board must differ
+A puzzle built around a single rule: every cell on the board must differ
 in both shape **and** color from its neighbors. You cycle through the available
 options to keep the board compliant for as long as possible.
 
@@ -26,7 +26,7 @@ The Goal is to get the highest score!
 - `BoardCell` renders a small visual counter so players can plan around the
   frozen cells.
 
-## Future Work
+## Multisession Support
 
-Multiplayer matchmaking, turn sync, and shared scoring were scoped but not yet
-implemented.
+I'm very sorry, but i didn't have the time to think about it , and also didn't do this ever so it took me some time to understand it. 
+
